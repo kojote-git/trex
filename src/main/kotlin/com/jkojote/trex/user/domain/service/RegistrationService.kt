@@ -10,7 +10,7 @@ interface RegistrationService {
 
   fun verifyUser(verificationTokenKey: String) : Boolean
 
-  class RegisterUserInput(
+  data class RegisterUserInput(
     val email: String,
     val rawPassword: String
   )
