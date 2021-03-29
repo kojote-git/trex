@@ -21,6 +21,6 @@ class VerificationToken(
 ) {
 
   fun isExpired() : Boolean {
-    return ZonedDateTime.now() < expirationTime
+    return ZonedDateTime.now() > expirationTime
   }
 }

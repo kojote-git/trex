@@ -1,6 +1,6 @@
-package com.jkojote.trex.template.freemarker
+package com.jkojote.trex.user.domain.service.template.freemarker
 
-import com.jkojote.trex.template.EmailVerificationTemplate
+import com.jkojote.trex.user.domain.service.template.EmailVerificationTemplate
 import freemarker.template.Configuration
 import org.springframework.stereotype.Component
 import java.io.StringWriter
@@ -10,12 +10,12 @@ class FreemarkerEmailVerificationTemplate : EmailVerificationTemplate {
   private val freemarkerTemplate: freemarker.template.Template
 
   // FIXME this is here for demo purposes
-  private val verificationEndpoint = "http://localhost:8080/api/user/verification"
+  private val verificationEndpoint = "http://localhost:8080/api/user/registration/verification"
 
   init {
     val configuration = Configuration(Configuration.VERSION_2_3_30)
     configuration.setClassForTemplateLoading(this.javaClass, "/templates")
-    freemarkerTemplate = configuration.getTemplate("email-template")
+    freemarkerTemplate = configuration.getTemplate("email-template.ftl")
   }
 
   override fun render(model: EmailVerificationTemplate.Model) : String {

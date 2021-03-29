@@ -2,7 +2,7 @@ package com.jkojote.trex.user.domain.service.impl
 
 import com.jkojote.trex.user.domain.model.VerificationToken
 import com.jkojote.trex.user.domain.service.EmailService
-import com.jkojote.trex.template.EmailVerificationTemplate
+import com.jkojote.trex.user.domain.service.template.EmailVerificationTemplate
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 
