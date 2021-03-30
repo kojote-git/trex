@@ -1,7 +1,7 @@
-package com.jkojote.trex.user.domain.service
+package com.jkojote.trex.user.domain.service.user
 
 import com.jkojote.trex.user.domain.model.User
-import com.jkojote.trex.user.domain.service.exception.UserAlreadyExistsException
+import com.jkojote.trex.user.domain.service.user.exception.UserAlreadyExistsException
 import java.util.*
 
 interface UserService {

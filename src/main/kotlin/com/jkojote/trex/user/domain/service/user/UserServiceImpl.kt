@@ -1,9 +1,7 @@
-package com.jkojote.trex.user.domain.service.impl
+package com.jkojote.trex.user.domain.service.user
 
 import com.jkojote.trex.user.domain.model.User
-import com.jkojote.trex.user.domain.repository.UserRepository
-import com.jkojote.trex.user.domain.service.UserService
-import com.jkojote.trex.user.domain.service.exception.UserAlreadyExistsException
+import com.jkojote.trex.user.domain.service.user.exception.UserAlreadyExistsException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*

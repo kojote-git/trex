@@ -1,8 +1,11 @@
-package com.jkojote.trex.user.domain.service.impl
+package com.jkojote.trex.user.domain.service.registration.impl
 
 import com.jkojote.trex.user.domain.model.VerificationToken
 import com.jkojote.trex.user.domain.model.User
-import com.jkojote.trex.user.domain.service.*
+import com.jkojote.trex.user.domain.service.registration.EmailService
+import com.jkojote.trex.user.domain.service.registration.RegistrationService
+import com.jkojote.trex.user.domain.service.registration.VerificationTokenService
+import com.jkojote.trex.user.domain.service.user.UserService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

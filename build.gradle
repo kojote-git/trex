@@ -32,6 +32,11 @@ dependencies {
     implementation "io.springfox:springfox-swagger2:2.9.2"
     implementation "io.springfox:springfox-swagger-ui:2.9.2"
 
+    // jwt
+    implementation "io.jsonwebtoken:jjwt-api:0.11.1"
+    runtimeOnly "io.jsonwebtoken:jjwt-impl:0.11.1"
+    runtimeOnly "io.jsonwebtoken:jjwt-jackson:0.11.1"
+
     // version is managed by spring.dependency-management plugin
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
 

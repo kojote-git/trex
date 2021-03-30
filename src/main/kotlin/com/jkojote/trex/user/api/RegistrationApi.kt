@@ -1,8 +1,8 @@
 package com.jkojote.trex.user.api
 
 import com.jkojote.trex.user.api.dto.UserRegistrationDto
-import com.jkojote.trex.user.domain.service.RegistrationService
-import com.jkojote.trex.user.domain.service.exception.UserAlreadyExistsException
+import com.jkojote.trex.user.domain.service.registration.RegistrationService
+import com.jkojote.trex.user.domain.service.user.exception.UserAlreadyExistsException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -17,7 +17,8 @@ class RegistrationApi(
   @PostMapping
   fun registerUser(@RequestBody @Valid userRegistrationDto: UserRegistrationDto) : ResponseEntity<Unit> {
     try {
-      registrationService.registerUser(RegistrationService.RegisterUserInput(
+      registrationService.registerUser(
+        RegistrationService.RegisterUserInput(
         email = userRegistrationDto.email,
         rawPassword = userRegistrationDto.password
       ))

@@ -1,4 +1,4 @@
-package com.jkojote.trex.user.domain.repository
+package com.jkojote.trex.user.domain.service.user
 
 import com.jkojote.trex.user.domain.model.User
 import org.springframework.data.jpa.repository.JpaRepository

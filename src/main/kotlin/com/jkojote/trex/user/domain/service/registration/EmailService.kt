@@ -1,4 +1,4 @@
-package com.jkojote.trex.user.domain.service
+package com.jkojote.trex.user.domain.service.registration
 
 import com.jkojote.trex.user.domain.model.VerificationToken
 

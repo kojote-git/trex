@@ -1,6 +1,6 @@
-package com.jkojote.trex.user.domain.service.template.freemarker
+package com.jkojote.trex.user.domain.service.registration.template.freemarker
 
-import com.jkojote.trex.user.domain.service.template.EmailVerificationTemplate
+import com.jkojote.trex.user.domain.service.registration.template.EmailVerificationTemplate
 import freemarker.template.Configuration
 import org.springframework.stereotype.Component
 import java.io.StringWriter

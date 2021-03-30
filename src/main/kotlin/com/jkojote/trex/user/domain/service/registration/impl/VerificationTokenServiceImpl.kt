@@ -1,9 +1,9 @@
-package com.jkojote.trex.user.domain.service.impl
+package com.jkojote.trex.user.domain.service.registration.impl
 
 import com.jkojote.trex.user.domain.model.VerificationToken
 import com.jkojote.trex.user.domain.model.User
-import com.jkojote.trex.user.domain.repository.VerificationTokenRepository
-import com.jkojote.trex.user.domain.service.VerificationTokenService
+import com.jkojote.trex.user.domain.service.registration.VerificationTokenRepository
+import com.jkojote.trex.user.domain.service.registration.VerificationTokenService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Duration
