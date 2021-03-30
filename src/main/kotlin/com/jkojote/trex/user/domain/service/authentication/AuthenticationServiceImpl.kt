@@ -19,6 +19,8 @@ class AuthenticationServiceImpl(
 
   override fun authenticate(authenticationInput: AuthenticationService.AuthenticationInput) : AuthenticationResult {
     val user = getUser(authenticationInput.email)
+
+    checkVerified(user)
     checkPassword(user, authenticationInput.password)
 
     val accessToken = jwtService.createToken(user.email)
@@ -46,6 +48,12 @@ class AuthenticationServiceImpl(
   private fun checkPassword(user: User, password: String) {
     if (passwordEncoder.encode(password) != user.password) {
       throw AuthenticationFailedException("Passwords don't match")
+    }
+  }
+
+  private fun checkVerified(user: User) {
+    if (!user.verified) {
+      throw AuthenticationFailedException("User is not verified")
     }
   }
 }
