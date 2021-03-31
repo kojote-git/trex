@@ -1,8 +1,8 @@
 package com.jkojote.trex.place.api.dto
 
-import com.jkojote.trex.place.domain.model.Image
 import com.jkojote.trex.place.domain.model.Location
 import com.jkojote.trex.place.domain.model.Place
+import com.jkojote.trex.place.domain.model.ResourceId
 
 data class DetailedPlaceDto(
   val id: String,
@@ -11,8 +11,8 @@ data class DetailedPlaceDto(
   val category: String,
   val region: String,
   val location: Location,
-  val thumbnail: Image?,
-  val photos: List<Image>
+  val thumbnail: ResourceId?,
+  val photos: List<ResourceId>
 ) {
 
   companion object {

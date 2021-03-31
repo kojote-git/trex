@@ -1,4 +1,4 @@
-package com.jkojote.trex.place.domain.service.place
+package com.jkojote.trex.place.domain.service
 
 import com.jkojote.trex.place.domain.model.Location
 import javax.validation.constraints.NotEmpty

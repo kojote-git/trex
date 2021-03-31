@@ -1,12 +1,8 @@
-package com.jkojote.trex.place.domain.service.place.mongodb
+package com.jkojote.trex.place.domain.service.mongodb
 
-import com.jkojote.trex.place.domain.model.Distance
-import com.jkojote.trex.place.domain.model.Image
-import com.jkojote.trex.place.domain.model.Location
-import com.jkojote.trex.place.domain.model.Place
-import com.jkojote.trex.place.domain.service.content.ContentService
-import com.jkojote.trex.place.domain.service.place.CreatePlaceInput
-import com.jkojote.trex.place.domain.service.place.PlaceService
+import com.jkojote.trex.place.domain.model.*
+import com.jkojote.trex.place.domain.service.CreatePlaceInput
+import com.jkojote.trex.place.domain.service.PlaceService
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.core.MongoOperations
 import org.springframework.data.mongodb.core.query.Criteria.where
@@ -16,14 +12,10 @@ import org.springframework.data.mongodb.core.query.Update.update
 import org.springframework.data.mongodb.core.query.UpdateDefinition
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Service
-import java.io.InputStream
 import java.util.*
 
 @Service
-class MongoPlaceService(
-  private val contentService: ContentService,
-  private val mongoOperations: MongoOperations
-) : PlaceService {
+class MongoPlaceService(private val mongoOperations: MongoOperations) : PlaceService {
 
   companion object {
     const val ID = "id"
@@ -47,34 +39,26 @@ class MongoPlaceService(
     return place
   }
 
-  override fun setThumbnail(place: Place, content: InputStream, contentType: String) : Image {
-    val image = savePhoto(content, contentType)
-
+  override fun setThumbnail(place: Place, resourceId: ResourceId) {
     mongoOperations.updateFirst(
       query(where(ID).isEqualTo(place.id)),
-      update(THUMBNAIL, image),
+      update(THUMBNAIL, resourceId.value),
       Place::class.java
     )
-
-    return image
   }
 
-  override fun addPhoto(place: Place, content: InputStream, contentType: String): Image {
-    val image = savePhoto(content, contentType)
-
+  override fun addPhoto(place: Place, resourceId: ResourceId) {
     mongoOperations.updateFirst(
       query(where(ID).isEqualTo(place.id)),
-      push(PHOTOS, image),
+      push(PHOTOS, resourceId.value),
       Place::class.java
     )
-
-    return image
   }
 
-  override fun removePhoto(place: Place, photo: Image) {
+  override fun removePhoto(place: Place, resourceId: ResourceId) {
     mongoOperations.updateFirst(
       query(where(ID).isEqualTo(place.id)),
-      pull(PHOTOS, photo),
+      pull(PHOTOS, resourceId.value),
       Place::class.java
     )
   }
@@ -97,11 +81,6 @@ class MongoPlaceService(
       ),
       Place::class.java
     )
-  }
-
-  private fun savePhoto(content: InputStream, contentType: String) : Image {
-    val contentId = content.use { contentService.saveContent(it) }
-    return Image(contentId, contentType)
   }
 
   private fun push(key: String, value: Any?) : UpdateDefinition {

@@ -13,6 +13,6 @@ data class Place(
   val category: String,
   val region: String,
   val location: Location,
-  val thumbnail: Image?,
-  val photos: List<Image>
+  val thumbnail: ResourceId?,
+  val photos: List<ResourceId>
 )

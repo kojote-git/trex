@@ -1,4 +1,4 @@
-package com.jkojote.trex.place.domain.service.place.mongodb.converters
+package com.jkojote.trex.place.domain.service.mongodb.converters
 
 import com.jkojote.trex.place.domain.model.Location
 import org.bson.BsonArray

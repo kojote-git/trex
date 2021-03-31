@@ -1,4 +1,4 @@
-package com.jkojote.trex.place.domain.service.place.mongodb
+package com.jkojote.trex.place.domain.service.mongodb
 
 import com.jkojote.trex.place.domain.model.Distance
 import com.jkojote.trex.place.domain.model.Location

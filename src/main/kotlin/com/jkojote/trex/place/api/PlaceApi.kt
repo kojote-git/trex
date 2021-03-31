@@ -1,13 +1,12 @@
 package com.jkojote.trex.place.api
 
 import com.jkojote.trex.place.api.dto.DetailedPlaceDto
-import com.jkojote.trex.place.api.dto.ImageDto
 import com.jkojote.trex.place.api.dto.PlaceDto
-import com.jkojote.trex.place.api.dto.SearchNearestDto
+import com.jkojote.trex.place.api.dto.NearLocationQueryDto
 import com.jkojote.trex.place.api.service.PlaceServiceFacade
 import com.jkojote.trex.place.api.service.exception.PhotoNotFoundException
 import com.jkojote.trex.place.api.service.exception.PlaceNotFoundException
-import com.jkojote.trex.place.domain.service.place.CreatePlaceInput
+import com.jkojote.trex.place.domain.service.CreatePlaceInput
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -40,7 +39,11 @@ class PlaceApi(
                    @RequestParam("file") file: MultipartFile) : ResponseEntity<Any> {
 
     try {
-      placeServiceFacade.setThumbnail(id, file.inputStream, file.contentType)
+      placeServiceFacade.setThumbnail(
+        placeId = id,
+        content = file.inputStream,
+        contentType = file.contentType ?: "image/jpeg"
+      )
       return ResponseEntity(HttpStatus.OK)
     } catch (e: PlaceNotFoundException) {
       return ResponseEntity(HttpStatus.NOT_FOUND)
@@ -49,22 +52,26 @@ class PlaceApi(
 
   @PostMapping("{id}/photo")
   fun addPhoto(@PathVariable("id") id: String,
-               @RequestParam("file") file: MultipartFile) : ResponseEntity<ImageDto> {
+               @RequestParam("file") file: MultipartFile) : ResponseEntity<Any> {
 
     try {
-      val imageDto = placeServiceFacade.addPhoto(id, file.inputStream, file.contentType)
-      return ResponseEntity(imageDto, HttpStatus.OK)
+      placeServiceFacade.addPhoto(
+        placeId = id,
+        content = file.inputStream,
+        contentType = file.contentType ?: "image/jpeg"
+      )
+      return ResponseEntity(HttpStatus.OK)
     } catch (e: PlaceNotFoundException) {
       return ResponseEntity(HttpStatus.NOT_FOUND)
     }
   }
 
-  @DeleteMapping("{id}/photo/{contentId}")
+  @DeleteMapping("{id}/photo/{resourceId}")
   fun removePhoto(@PathVariable("id") id: String,
-                  @PathVariable("contentId") contentId: String) : ResponseEntity<Any> {
+                  @PathVariable("resourceId") resourceId: String) : ResponseEntity<Any> {
 
     try {
-      placeServiceFacade.removePhoto(id, contentId)
+      placeServiceFacade.removePhoto(id, resourceId)
       return ResponseEntity(HttpStatus.OK)
     } catch (e: PlaceNotFoundException) {
       return ResponseEntity(HttpStatus.NOT_FOUND)
@@ -74,9 +81,8 @@ class PlaceApi(
   }
 
   @PostMapping("search/nearest")
-  fun findNearestPlaces(@RequestBody searchNearestDto: SearchNearestDto) : ResponseEntity<List<PlaceDto>> {
-    val places = placeServiceFacade.searchNearestPlaces(searchNearestDto)
+  fun findNearestPlaces(@RequestBody nearsetQueryDto: NearLocationQueryDto) : ResponseEntity<List<PlaceDto>> {
+    val places = placeServiceFacade.searchNearestPlaces(nearsetQueryDto)
     return ResponseEntity(places, HttpStatus.OK)
   }
-
 }

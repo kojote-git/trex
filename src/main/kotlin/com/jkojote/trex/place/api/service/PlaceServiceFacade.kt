@@ -1,23 +1,25 @@
 package com.jkojote.trex.place.api.service
 
 import com.jkojote.trex.place.api.dto.DetailedPlaceDto
-import com.jkojote.trex.place.api.dto.ImageDto
 import com.jkojote.trex.place.api.dto.PlaceDto
-import com.jkojote.trex.place.api.dto.SearchNearestDto
-import com.jkojote.trex.place.api.service.exception.PhotoNotFoundException
+import com.jkojote.trex.place.api.dto.NearLocationQueryDto
 import com.jkojote.trex.place.api.service.exception.PlaceNotFoundException
 import com.jkojote.trex.place.domain.model.Distance
-import com.jkojote.trex.place.domain.model.Image
 import com.jkojote.trex.place.domain.model.Place
-import com.jkojote.trex.place.domain.service.place.CreatePlaceInput
-import com.jkojote.trex.place.domain.service.place.PlaceService
+import com.jkojote.trex.place.domain.model.ResourceId
+import com.jkojote.trex.place.domain.service.CreatePlaceInput
+import com.jkojote.trex.place.domain.service.PlaceService
+import com.jkojote.trex.resource.domain.model.Resource
+import com.jkojote.trex.resource.domain.service.CreateResourceInput
+import com.jkojote.trex.resource.domain.service.ResourceService
 import org.springframework.stereotype.Service
 import java.io.InputStream
 import java.util.*
 
 @Service
 class PlaceServiceFacade(
-  private val placeService: PlaceService
+  private val placeService: PlaceService,
+  private val resourceService: ResourceService
 ) {
 
   fun createPlace(createPlaceInput: CreatePlaceInput) : PlaceDto {
@@ -31,28 +33,28 @@ class PlaceServiceFacade(
       .map { DetailedPlaceDto.fromPlace(it) }
   }
 
-  fun setThumbnail(placeId: String, thumbnail: InputStream, contentType: String) {
+  fun setThumbnail(placeId: String, content: InputStream, contentType: String) {
     val place = getPlace(placeId)
-    placeService.setThumbnail(place, thumbnail, contentType)
+    val resource = saveContent(content, contentType)
+    placeService.setThumbnail(place, ResourceId(resource.id))
   }
 
-  fun addPhoto(placeId: String, content: InputStream, contentType: String) : ImageDto {
+  fun addPhoto(placeId: String, content: InputStream, contentType: String) {
     val place = getPlace(placeId)
-    val image = placeService.addPhoto(place, content, contentType)
-    return ImageDto.fromImage(image)
+    val resource = saveContent(content, contentType)
+    placeService.addPhoto(place, ResourceId(resource.id))
   }
 
-  fun removePhoto(placeId: String, contentId: String) {
+  fun removePhoto(placeId: String, resourceId: String) {
     val place = getPlace(placeId)
-    val photo = getPhoto(place, contentId)
-    placeService.removePhoto(place, photo)
+    placeService.removePhoto(place, ResourceId(resourceId))
   }
 
-  fun searchNearestPlaces(searchNearestDto: SearchNearestDto) : List<PlaceDto> {
+  fun searchNearestPlaces(nearLocationQueryDto: NearLocationQueryDto) : List<PlaceDto> {
     return placeService
       .findNearest(
-        location = searchNearestDto.location,
-        distance = Distance(searchNearestDto.distanceInMeters, Distance.Unit.METER)
+        location = nearLocationQueryDto.location,
+        distance = Distance(nearLocationQueryDto.distanceInMeters, Distance.Unit.METER)
       )
       .map { PlaceDto.fromPlace(it) }
   }
@@ -63,10 +65,12 @@ class PlaceServiceFacade(
       .orElseThrow { PlaceNotFoundException("Unknown place id $placeId") }
   }
 
-  private fun getPhoto(place: Place, contentId: String) : Image {
-    val photo = place.photos.find { it.contentId.value == contentId }
-    return photo ?: throw PhotoNotFoundException("Unknown photo with id $contentId")
+  private fun saveContent(content: InputStream, contentType: String) : Resource {
+    val input = CreateResourceInput(
+      contentType = contentType
+    )
+    val resource = resourceService.createResource(input)
+    resourceService.saveContent(resource, content)
+    return resource
   }
-
-
 }

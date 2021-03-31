@@ -16,5 +16,8 @@ class User(
   val password: String,
 
   @Column(nullable = false)
-  val verified: Boolean = false
+  val verified: Boolean = false,
+
+  @Enumerated(EnumType.STRING)
+  val role: Role = Role.USER
 )
