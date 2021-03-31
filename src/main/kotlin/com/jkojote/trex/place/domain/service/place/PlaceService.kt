@@ -5,15 +5,16 @@ import com.jkojote.trex.place.domain.model.Image
 import com.jkojote.trex.place.domain.model.Location
 import com.jkojote.trex.place.domain.model.Place
 import org.springframework.core.io.Resource
+import java.io.InputStream
 import java.util.*
 
 interface PlaceService {
 
   fun createPlace(input: CreatePlaceInput) : Place
 
-  fun setThumbnail(place: Place, photo: Resource) : Image
+  fun setThumbnail(place: Place, content: InputStream) : Image
 
-  fun addPhoto(place: Place, photo: Resource) : Image
+  fun addPhoto(place: Place, content: InputStream) : Image
 
   fun removePhoto(place: Place, photo: Image)
 

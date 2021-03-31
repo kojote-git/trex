@@ -8,7 +8,6 @@ import com.jkojote.trex.place.domain.service.content.ContentService
 import com.jkojote.trex.place.domain.service.place.CreatePlaceInput
 import com.jkojote.trex.place.domain.service.place.PlaceService
 import org.bson.types.ObjectId
-import org.springframework.core.io.Resource
 import org.springframework.data.mongodb.core.MongoOperations
 import org.springframework.data.mongodb.core.query.Criteria.where
 import org.springframework.data.mongodb.core.query.Query.query
@@ -17,6 +16,7 @@ import org.springframework.data.mongodb.core.query.Update.update
 import org.springframework.data.mongodb.core.query.UpdateDefinition
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Service
+import java.io.InputStream
 import java.util.*
 
 @Service
@@ -47,8 +47,8 @@ class MongoPlaceService(
     return place
   }
 
-  override fun setThumbnail(place: Place, photo: Resource) : Image {
-    val image = savePhoto(photo)
+  override fun setThumbnail(place: Place, content: InputStream) : Image {
+    val image = savePhoto(content)
 
     mongoOperations.updateFirst(
       query(where(ID).isEqualTo(place.id)),
@@ -59,8 +59,8 @@ class MongoPlaceService(
     return image
   }
 
-  override fun addPhoto(place: Place, photo: Resource): Image {
-    val image = savePhoto(photo)
+  override fun addPhoto(place: Place, content: InputStream): Image {
+    val image = savePhoto(content)
 
     mongoOperations.updateFirst(
       query(where(ID).isEqualTo(place.id)),
@@ -99,10 +99,8 @@ class MongoPlaceService(
     )
   }
 
-  private fun savePhoto(photo: Resource) : Image {
-    val contentId = photo.inputStream.use {
-      contentService.saveContent(it)
-    }
+  private fun savePhoto(content: InputStream) : Image {
+    val contentId = content.use { contentService.saveContent(it) }
     return Image(contentId)
   }
 
