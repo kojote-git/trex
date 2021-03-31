@@ -10,9 +10,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping(path = ["/api/user/registration"], produces = ["application/json"])
-class RegistrationApi(
-  private val registrationService: RegistrationService
-) {
+class RegistrationApi(private val registrationService: RegistrationService) {
 
   @PostMapping
   fun registerUser(@RequestBody @Valid userRegistrationDto: UserRegistrationDto) : ResponseEntity<Unit> {

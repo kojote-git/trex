@@ -6,6 +6,7 @@ import com.jkojote.trex.user.domain.service.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -31,7 +32,19 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     http
       .csrf().disable()
       .authorizeRequests()
-        .anyRequest().permitAll()
+        .antMatchers("/api/user/registration/**").permitAll()
+        .antMatchers("/api/user/authentication/**").permitAll()
+
+        // Place API
+        .antMatchers(HttpMethod.POST, "/api/place").hasRole("ADMIN")
+        .antMatchers(HttpMethod.PUT, "/api/place/{id}/thumbnail").hasRole("ADMIN")
+        .antMatchers(HttpMethod.POST, "/api/place/{id}/photo").hasRole("ADMIN")
+        .antMatchers(HttpMethod.DELETE, "/api/place/{id}/photo/{resourceId}").hasRole("ADMIN")
+        .antMatchers(HttpMethod.POST, "/api/place/search/nearset").hasRole("ADMIN")
+        .antMatchers(HttpMethod.GET, "/api/place/{id}").authenticated()
+
+
+        .anyRequest().authenticated()
       .and()
         .addFilterBefore(authorizationFilter, BasicAuthenticationFilter::class.java)
         .sessionManagement()

@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.RestController
 import javax.security.auth.RefreshFailedException
 
 @RestController
-@RequestMapping(path = ["/api/user/auth"], produces = ["application/json"])
-class AuthenticationApi(
-  private val authenticationService: AuthenticationService
-) {
-
+@RequestMapping(path = ["/api/user/authentication"], produces = ["application/json"])
+class AuthenticationApi(private val authenticationService: AuthenticationService) {
 
   @PostMapping
   fun authenticate(@RequestBody authenticationDto: AuthenticationDto) : ResponseEntity<AuthenticationResult> {
