@@ -12,9 +12,9 @@ interface PlaceService {
 
   fun createPlace(input: CreatePlaceInput) : Place
 
-  fun setThumbnail(place: Place, content: InputStream) : Image
+  fun setThumbnail(place: Place, content: InputStream, contentType: String) : Image
 
-  fun addPhoto(place: Place, content: InputStream) : Image
+  fun addPhoto(place: Place, content: InputStream, contentType: String) : Image
 
   fun removePhoto(place: Place, photo: Image)
 

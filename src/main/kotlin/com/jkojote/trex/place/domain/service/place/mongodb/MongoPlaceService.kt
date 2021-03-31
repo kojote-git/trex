@@ -47,8 +47,8 @@ class MongoPlaceService(
     return place
   }
 
-  override fun setThumbnail(place: Place, content: InputStream) : Image {
-    val image = savePhoto(content)
+  override fun setThumbnail(place: Place, content: InputStream, contentType: String) : Image {
+    val image = savePhoto(content, contentType)
 
     mongoOperations.updateFirst(
       query(where(ID).isEqualTo(place.id)),
@@ -59,8 +59,8 @@ class MongoPlaceService(
     return image
   }
 
-  override fun addPhoto(place: Place, content: InputStream): Image {
-    val image = savePhoto(content)
+  override fun addPhoto(place: Place, content: InputStream, contentType: String): Image {
+    val image = savePhoto(content, contentType)
 
     mongoOperations.updateFirst(
       query(where(ID).isEqualTo(place.id)),
@@ -99,9 +99,9 @@ class MongoPlaceService(
     )
   }
 
-  private fun savePhoto(content: InputStream) : Image {
+  private fun savePhoto(content: InputStream, contentType: String) : Image {
     val contentId = content.use { contentService.saveContent(it) }
-    return Image(contentId)
+    return Image(contentId, contentType)
   }
 
   private fun push(key: String, value: Any?) : UpdateDefinition {

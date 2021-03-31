@@ -40,7 +40,7 @@ class PlaceApi(
                    @RequestParam("file") file: MultipartFile) : ResponseEntity<Any> {
 
     try {
-      placeServiceFacade.setThumbnail(id, file.inputStream)
+      placeServiceFacade.setThumbnail(id, file.inputStream, file.contentType)
       return ResponseEntity(HttpStatus.OK)
     } catch (e: PlaceNotFoundException) {
       return ResponseEntity(HttpStatus.NOT_FOUND)
@@ -52,7 +52,7 @@ class PlaceApi(
                @RequestParam("file") file: MultipartFile) : ResponseEntity<ImageDto> {
 
     try {
-      val imageDto = placeServiceFacade.addPhoto(id, file.inputStream)
+      val imageDto = placeServiceFacade.addPhoto(id, file.inputStream, file.contentType)
       return ResponseEntity(imageDto, HttpStatus.OK)
     } catch (e: PlaceNotFoundException) {
       return ResponseEntity(HttpStatus.NOT_FOUND)

@@ -31,14 +31,14 @@ class PlaceServiceFacade(
       .map { DetailedPlaceDto.fromPlace(it) }
   }
 
-  fun setThumbnail(placeId: String, thumbnail: InputStream) {
+  fun setThumbnail(placeId: String, thumbnail: InputStream, contentType: String) {
     val place = getPlace(placeId)
-    placeService.setThumbnail(place, thumbnail)
+    placeService.setThumbnail(place, thumbnail, contentType)
   }
 
-  fun addPhoto(placeId: String, content: InputStream) : ImageDto {
+  fun addPhoto(placeId: String, content: InputStream, contentType: String) : ImageDto {
     val place = getPlace(placeId)
-    val image = placeService.addPhoto(place, content)
+    val image = placeService.addPhoto(place, content, contentType)
     return ImageDto.fromImage(image)
   }
 
