@@ -46,7 +46,7 @@ class AuthenticationServiceImpl(
   }
 
   private fun checkPassword(user: User, password: String) {
-    if (passwordEncoder.encode(password) != user.password) {
+    if (!passwordEncoder.matches(password, user.password)) {
       throw AuthenticationFailedException("Passwords don't match")
     }
   }

@@ -1,6 +1,6 @@
 package com.jkojote.trex.config
 
-import com.jkojote.trex.place.domain.service.mongodb.converters.BsonDocumentToLocationConverter
+import com.jkojote.trex.place.domain.service.mongodb.converters.DocumentToLocationConverter
 import com.jkojote.trex.place.domain.service.mongodb.converters.LocationToBsonDocumentConverter
 import com.jkojote.trex.place.domain.service.mongodb.converters.ResourceIdToStringConverter
 import com.jkojote.trex.place.domain.service.mongodb.converters.StringToResourceIdConverter
@@ -18,7 +18,7 @@ class MongoConversionsConfig {
       StringToResourceIdConverter(),
 
       LocationToBsonDocumentConverter(),
-      BsonDocumentToLocationConverter()
+      DocumentToLocationConverter()
     ))
   }
 
