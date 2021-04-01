@@ -1,9 +1,6 @@
 package com.jkojote.trex.config
 
-import com.jkojote.trex.history.domain.service.mongodb.converters.LongToUserIdConverter
-import com.jkojote.trex.history.domain.service.mongodb.converters.PlaceIdToStringConverter
-import com.jkojote.trex.history.domain.service.mongodb.converters.StringToPlaceIdConverter
-import com.jkojote.trex.history.domain.service.mongodb.converters.UserIdToLongConverter
+import com.jkojote.trex.history.domain.service.mongodb.converters.*
 import com.jkojote.trex.place.domain.service.mongodb.converters.DocumentToLocationConverter
 import com.jkojote.trex.place.domain.service.mongodb.converters.LocationToBsonDocumentConverter
 import com.jkojote.trex.place.domain.service.mongodb.converters.ResourceIdToStringConverter
@@ -28,7 +25,10 @@ class MongoConversionsConfig {
       StringToPlaceIdConverter(),
 
       UserIdToLongConverter(),
-      LongToUserIdConverter()
+      LongToUserIdConverter(),
+
+      ZonedDateTimeToDateConverter(),
+      DateToZonedDateTimeConverter()
     ))
   }
 
