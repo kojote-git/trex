@@ -9,7 +9,6 @@ import org.springframework.data.convert.ReadingConverter
 class DocumentToLocationConverter : Converter<Document, Location> {
   override fun convert(source: Document) : Location {
     val coordinates = source["coordinates"]
-
     if (coordinates == null) {
       throw IllegalArgumentException("No coordinates are present")
     }
@@ -33,9 +32,6 @@ class DocumentToLocationConverter : Converter<Document, Location> {
       throw IllegalArgumentException("Coordinates must be double values")
     }
 
-    return Location(
-      lat = lat,
-      lng = lng
-    )
+    return Location(lat = lat, lng = lng)
   }
 }
