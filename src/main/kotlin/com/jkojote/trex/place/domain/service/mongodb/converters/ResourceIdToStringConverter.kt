@@ -8,6 +8,6 @@ import org.springframework.data.convert.WritingConverter
 class ResourceIdToStringConverter : Converter<ResourceId, String> {
 
   override fun convert(source: ResourceId): String {
-    return source.value
+    return source.id
   }
 }

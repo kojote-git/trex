@@ -15,6 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.HttpStatusEntryPoint
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import org.springframework.security.config.annotation.web.builders.WebSecurity
+
+
+
 
 @Configuration
 class SecurityConfig : WebSecurityConfigurerAdapter() {
@@ -57,6 +61,17 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
   @Bean
   fun passwordEncoder() : PasswordEncoder {
     return BCryptPasswordEncoder()
+  }
+
+  override fun configure(web: WebSecurity) {
+    web.ignoring().antMatchers(
+      "/v2/api-docs",
+      "/configuration/ui",
+      "/swagger-resources/**",
+      "/configuration/security",
+      "/swagger-ui.html",
+      "/webjars/**"
+    )
   }
 
 }

@@ -42,7 +42,7 @@ class MongoPlaceService(private val mongoOperations: MongoOperations) : PlaceSer
   override fun setThumbnail(place: Place, resourceId: ResourceId) {
     mongoOperations.updateFirst(
       query(where(ID).isEqualTo(place.id)),
-      update(THUMBNAIL, resourceId.value),
+      update(THUMBNAIL, resourceId.id),
       Place::class.java
     )
   }
@@ -50,7 +50,7 @@ class MongoPlaceService(private val mongoOperations: MongoOperations) : PlaceSer
   override fun addPhoto(place: Place, resourceId: ResourceId) {
     mongoOperations.updateFirst(
       query(where(ID).isEqualTo(place.id)),
-      push(PHOTOS, resourceId.value),
+      push(PHOTOS, resourceId.id),
       Place::class.java
     )
   }
@@ -58,7 +58,7 @@ class MongoPlaceService(private val mongoOperations: MongoOperations) : PlaceSer
   override fun removePhoto(place: Place, resourceId: ResourceId) {
     mongoOperations.updateFirst(
       query(where(ID).isEqualTo(place.id)),
-      pull(PHOTOS, resourceId.value),
+      pull(PHOTOS, resourceId.id),
       Place::class.java
     )
   }
