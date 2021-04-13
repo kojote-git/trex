@@ -1,4 +1,4 @@
-package com.jkojote.trex.history.api.dto
+package com.jkojote.trex.history.api.model.response
 
 import com.jkojote.trex.history.domain.model.SavedPlace
 import java.time.ZonedDateTime

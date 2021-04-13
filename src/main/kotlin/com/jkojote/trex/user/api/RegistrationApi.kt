@@ -1,6 +1,6 @@
 package com.jkojote.trex.user.api
 
-import com.jkojote.trex.user.api.dto.UserRegistrationDto
+import com.jkojote.trex.user.api.model.request.RegisterUserRequestDto
 import com.jkojote.trex.user.domain.service.registration.RegistrationService
 import com.jkojote.trex.user.domain.service.user.exception.UserAlreadyExistsException
 import org.springframework.http.HttpStatus
@@ -13,12 +13,12 @@ import javax.validation.Valid
 class RegistrationApi(private val registrationService: RegistrationService) {
 
   @PostMapping
-  fun registerUser(@RequestBody @Valid userRegistrationDto: UserRegistrationDto) : ResponseEntity<Unit> {
+  fun registerUser(@RequestBody @Valid userRegistrationDto: RegisterUserRequestDto) : ResponseEntity<Unit> {
     try {
       registrationService.registerUser(
         RegistrationService.RegisterUserInput(
-        email = userRegistrationDto.email,
-        rawPassword = userRegistrationDto.password
+          email = userRegistrationDto.email,
+          rawPassword = userRegistrationDto.password
       ))
 
       return ResponseEntity(HttpStatus.OK)

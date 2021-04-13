@@ -1,7 +1,6 @@
-package com.jkojote.trex.history.api.dto
+package com.jkojote.trex.history.api.model.response
 
 import com.jkojote.trex.history.domain.model.History
-import com.jkojote.trex.history.domain.model.SavedPlace
 
 data class HistoryDto(
   val userId: Long,

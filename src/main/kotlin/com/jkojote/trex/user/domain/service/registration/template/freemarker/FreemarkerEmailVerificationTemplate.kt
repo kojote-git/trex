@@ -10,7 +10,7 @@ class FreemarkerEmailVerificationTemplate : EmailVerificationTemplate {
   private val freemarkerTemplate: freemarker.template.Template
 
   // FIXME this is here for demo purposes
-  private val verificationEndpoint = "http://localhost:8080/api/user/registration/verification"
+  private val verificationEndpoint = "http://192.168.16.102:8080/api/user/registration/verification"
 
   init {
     val configuration = Configuration(Configuration.VERSION_2_3_30)

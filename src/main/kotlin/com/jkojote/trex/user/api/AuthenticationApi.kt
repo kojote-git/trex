@@ -1,11 +1,12 @@
 package com.jkojote.trex.user.api
 
-import com.jkojote.trex.user.api.dto.AuthenticationDto
-import com.jkojote.trex.user.api.dto.RefreshDto
+import com.jkojote.trex.user.api.model.request.AuthenticateRequestDto
+import com.jkojote.trex.user.api.model.request.RefreshRequestDto
+import com.jkojote.trex.user.api.model.response.AuthenticationResultDto
+import com.jkojote.trex.user.api.model.response.RefreshResultDto
 import com.jkojote.trex.user.domain.service.authentication.AuthenticationFailedException
-import com.jkojote.trex.user.domain.service.authentication.AuthenticationResult
 import com.jkojote.trex.user.domain.service.authentication.AuthenticationService
-import com.jkojote.trex.user.domain.service.authentication.RefreshResult
+import com.jkojote.trex.util.mapTo
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,14 +20,17 @@ import javax.security.auth.RefreshFailedException
 class AuthenticationApi(private val authenticationService: AuthenticationService) {
 
   @PostMapping
-  fun authenticate(@RequestBody authenticationDto: AuthenticationDto) : ResponseEntity<AuthenticationResult> {
+  fun authenticate(@RequestBody requestDto: AuthenticateRequestDto) : ResponseEntity<AuthenticationResultDto> {
     val authenticationInput = AuthenticationService.AuthenticationInput(
-      email = authenticationDto.email,
-      password = authenticationDto.password
+      email = requestDto.email,
+      password = requestDto.password
     )
 
     try {
-      val authenticationResult = authenticationService.authenticate(authenticationInput)
+      val authenticationResult = authenticationService
+        .authenticate(authenticationInput)
+        .mapTo { AuthenticationResultDto.fromAuthenticationResult(this) }
+
       return ResponseEntity(authenticationResult, HttpStatus.OK)
     } catch (e: AuthenticationFailedException) {
       return ResponseEntity(HttpStatus.UNAUTHORIZED)
@@ -34,13 +38,15 @@ class AuthenticationApi(private val authenticationService: AuthenticationService
   }
 
   @PostMapping("refresh")
-  fun refresh(@RequestBody refreshDto: RefreshDto) : ResponseEntity<RefreshResult> {
+  fun refresh(@RequestBody requestDto: RefreshRequestDto) : ResponseEntity<RefreshResultDto> {
     try {
-      val refreshResult = authenticationService.refresh(refreshDto.refreshToken)
+      val refreshResult = authenticationService
+        .refresh(requestDto.refreshToken)
+        .mapTo { RefreshResultDto.fromRefreshResult(this) }
+
       return ResponseEntity(refreshResult, HttpStatus.OK)
     } catch (e: RefreshFailedException) {
       return ResponseEntity(HttpStatus.UNAUTHORIZED)
     }
   }
-
 }

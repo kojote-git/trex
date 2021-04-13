@@ -1,12 +1,12 @@
 package com.jkojote.trex.place.api
 
-import com.jkojote.trex.place.api.dto.DetailedPlaceDto
-import com.jkojote.trex.place.api.dto.PlaceDto
-import com.jkojote.trex.place.api.dto.NearLocationQueryDto
+import com.jkojote.trex.place.api.model.request.CreatePlaceRequestDto
+import com.jkojote.trex.place.api.model.request.FindNearestPlacesRequestDto
+import com.jkojote.trex.place.api.model.response.DetailedPlaceDto
+import com.jkojote.trex.place.api.model.response.PlaceDto
 import com.jkojote.trex.place.api.service.PlaceServiceFacade
 import com.jkojote.trex.place.api.service.exception.PhotoNotFoundException
 import com.jkojote.trex.place.api.service.exception.PlaceNotFoundException
-import com.jkojote.trex.place.domain.service.CreatePlaceInput
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -20,8 +20,8 @@ class PlaceApi(
 ) {
 
   @PostMapping
-  fun createPlace(@RequestBody @Valid input: CreatePlaceInput) : ResponseEntity<PlaceDto> {
-    val place = placeServiceFacade.createPlace(input)
+  fun createPlace(@RequestBody @Valid requestDto: CreatePlaceRequestDto) : ResponseEntity<PlaceDto> {
+    val place = placeServiceFacade.createPlace(requestDto)
     return ResponseEntity(place, HttpStatus.OK)
   }
 
@@ -81,8 +81,8 @@ class PlaceApi(
   }
 
   @PostMapping("search/nearest")
-  fun findNearestPlaces(@RequestBody nearsetQueryDto: NearLocationQueryDto) : ResponseEntity<List<PlaceDto>> {
-    val places = placeServiceFacade.searchNearestPlaces(nearsetQueryDto)
+  fun findNearestPlaces(@RequestBody requestDto: FindNearestPlacesRequestDto) : ResponseEntity<List<PlaceDto>> {
+    val places = placeServiceFacade.searchNearestPlaces(requestDto)
     return ResponseEntity(places, HttpStatus.OK)
   }
 }

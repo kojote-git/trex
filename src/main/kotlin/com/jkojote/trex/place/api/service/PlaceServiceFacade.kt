@@ -1,8 +1,9 @@
 package com.jkojote.trex.place.api.service
 
-import com.jkojote.trex.place.api.dto.DetailedPlaceDto
-import com.jkojote.trex.place.api.dto.PlaceDto
-import com.jkojote.trex.place.api.dto.NearLocationQueryDto
+import com.jkojote.trex.place.api.model.request.CreatePlaceRequestDto
+import com.jkojote.trex.place.api.model.request.FindNearestPlacesRequestDto
+import com.jkojote.trex.place.api.model.response.DetailedPlaceDto
+import com.jkojote.trex.place.api.model.response.PlaceDto
 import com.jkojote.trex.place.api.service.exception.PlaceNotFoundException
 import com.jkojote.trex.place.domain.model.Distance
 import com.jkojote.trex.place.domain.model.Place
@@ -22,8 +23,15 @@ class PlaceServiceFacade(
   private val resourceService: ResourceService
 ) {
 
-  fun createPlace(createPlaceInput: CreatePlaceInput) : PlaceDto {
-    val place = placeService.createPlace(createPlaceInput)
+  fun createPlace(requestDto: CreatePlaceRequestDto) : PlaceDto {
+    val input = CreatePlaceInput(
+      name = requestDto.name,
+      category = requestDto.category,
+      description = requestDto.description,
+      location = requestDto.location,
+      region = requestDto.region
+    )
+    val place = placeService.createPlace(input)
     return PlaceDto.fromPlace(place)
   }
 
@@ -50,11 +58,11 @@ class PlaceServiceFacade(
     placeService.removePhoto(place, ResourceId(resourceId))
   }
 
-  fun searchNearestPlaces(nearLocationQueryDto: NearLocationQueryDto) : List<PlaceDto> {
+  fun searchNearestPlaces(requestDto: FindNearestPlacesRequestDto) : List<PlaceDto> {
     return placeService
       .findNearest(
-        location = nearLocationQueryDto.location,
-        distance = Distance(nearLocationQueryDto.distanceInMeters, Distance.Unit.METER)
+        location = requestDto.location,
+        distance = Distance(requestDto.distanceInMeters, Distance.Unit.METER)
       )
       .map { PlaceDto.fromPlace(it) }
   }

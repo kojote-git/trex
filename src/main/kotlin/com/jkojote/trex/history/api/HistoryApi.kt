@@ -1,6 +1,6 @@
 package com.jkojote.trex.history.api
 
-import com.jkojote.trex.history.api.dto.HistoryDto
+import com.jkojote.trex.history.api.model.response.HistoryDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
