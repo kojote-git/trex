@@ -38,6 +38,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
       .authorizeRequests()
         .antMatchers("/api/user/registration/**").permitAll()
         .antMatchers("/api/user/authentication/**").permitAll()
+        .antMatchers("/api/user/authentication/check").authenticated()
 
         // Place API
         .antMatchers(HttpMethod.POST, "/api/place").hasRole("ADMIN")
