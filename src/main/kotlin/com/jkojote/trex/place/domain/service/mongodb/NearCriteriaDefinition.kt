@@ -14,24 +14,26 @@ class NearCriteriaDefinition(
 
   override fun getCriteriaObject() : Document {
     return Document().apply {
-      set("\$near", Document().apply {
-        set("\$geometry", Document().apply {
-          set("type", "Point")
-          set("coordinates", listOf(location.lng, location.lat))
+      set(getKey(), Document().apply {
+        set("\$near", Document().apply {
+          set("\$geometry", Document().apply {
+            set("type", "Point")
+            set("coordinates", listOf(location.lng, location.lat))
+          })
+
+          if (minDistance != null) {
+            set("\$minDistance", minDistance.value)
+          }
+
+          if (maxDistance != null) {
+            set("\$maxDistance", maxDistance.value)
+          }
         })
-
-        if (minDistance != null) {
-          set("\$minDistance", minDistance.value)
-        }
-
-        if (maxDistance != null) {
-          set("\$maxDistance", maxDistance.value)
-        }
       })
     }
   }
 
-  override fun getKey(): String {
+  override fun getKey() : String {
     return key
   }
 }
