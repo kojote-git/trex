@@ -1,4 +1,4 @@
-package com.jkojote.trex.config.jwt
+package com.jkojote.trex.jwt
 
 import com.jkojote.trex.user.domain.model.User
 import org.springframework.security.authentication.AbstractAuthenticationToken

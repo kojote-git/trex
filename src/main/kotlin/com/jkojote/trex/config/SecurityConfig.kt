@@ -1,6 +1,6 @@
 package com.jkojote.trex.config
 
-import com.jkojote.trex.config.jwt.JwtAuthorizationFilter
+import com.jkojote.trex.jwt.JwtAuthorizationFilter
 import com.jkojote.trex.user.domain.service.jwt.JwtService
 import com.jkojote.trex.user.domain.service.user.UserService
 import org.springframework.beans.factory.annotation.Autowired

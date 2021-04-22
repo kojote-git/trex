@@ -1,6 +1,6 @@
 package com.jkojote.trex.history.api
 
-import com.jkojote.trex.config.jwt.UserAuthentication
+import com.jkojote.trex.jwt.UserAuthentication
 import com.jkojote.trex.history.domain.model.History
 import com.jkojote.trex.history.domain.model.PlaceId
 import com.jkojote.trex.history.domain.model.UserId

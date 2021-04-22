@@ -1,19 +1,20 @@
-package com.jkojote.trex.resource.domain.service
+package com.jkojote.trex.resource.domain.service.fs
 
 import com.jkojote.trex.resource.domain.model.Content
 import com.jkojote.trex.resource.domain.model.Resource
-import org.springframework.beans.factory.annotation.Value
+import com.jkojote.trex.resource.domain.service.CreateResourceInput
+import com.jkojote.trex.resource.domain.service.ResourceRepository
+import com.jkojote.trex.resource.domain.service.ResourceService
 import org.springframework.core.io.FileSystemResource
-import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.util.*
 
-@Service
-class ResourceServiceImpl(
+@Transactional
+class FileSystemResourceService(
   private val resourceRepository: ResourceRepository,
-  @Value("\${resources.directory:@{null}}")
   private val directory: File
 ) : ResourceService {
 
