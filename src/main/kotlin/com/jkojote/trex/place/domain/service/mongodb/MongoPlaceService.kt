@@ -68,7 +68,7 @@ class MongoPlaceService(private val mongoOperations: MongoOperations) : PlaceSer
       query(where(ID).isEqualTo(placeId)),
       Place::class.java
     )
-    return Optional.of(result)
+    return Optional.ofNullable(result)
   }
 
   override fun findNearest(location: Location, distance: Distance): List<Place> {

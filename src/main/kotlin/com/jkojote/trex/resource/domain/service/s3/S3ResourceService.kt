@@ -47,18 +47,18 @@ class S3ResourceService(
     val request = PutObjectRequest.builder()
       .bucket(s3Bucket)
       .key(resource.id)
+      .contentType(resource.contentType)
       .build()
     val tempFile = saveTempFile(content)
     s3Client.putObject(request, RequestBody.fromFile(tempFile))
   }
 
   override fun getContent(resource: Resource) : Optional<Content> {
-    val resource = S3Resource(
+    return Optional.of(S3Resource(
       key = resource.id,
       bucket = s3Bucket,
       s3Client = s3Client
-    )
-    return Optional.of(resource)
+    ))
   }
 
   private fun saveTempFile(content: InputStream) : File {

@@ -22,13 +22,13 @@ class S3ResourceServiceConfig {
   @Value("\${aws.s3.access-key-id}")
   private lateinit var accessKeyId: String
 
-  @Value("\$aws.s3.region")
+  @Value("\${aws.s3.region}")
   private lateinit var region: String
 
-  @Value("\$aws.s3.bucket")
+  @Value("\${aws.s3.bucket}")
   private lateinit var bucket: String
 
-  @Value("\$resources.temp-dir")
+  @Value("\${resources.temp-dir}")
   private lateinit var tempDir: String
 
   @Autowired

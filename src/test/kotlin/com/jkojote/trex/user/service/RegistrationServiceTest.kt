@@ -2,11 +2,11 @@ package com.jkojote.trex.user.service
 
 import com.jkojote.trex.user.domain.model.User
 import com.jkojote.trex.user.domain.model.VerificationToken
-import com.jkojote.trex.user.domain.service.EmailService
-import com.jkojote.trex.user.domain.service.RegistrationService
-import com.jkojote.trex.user.domain.service.UserService
-import com.jkojote.trex.user.domain.service.VerificationTokenService
-import com.jkojote.trex.user.domain.service.impl.RegistrationServiceImpl
+import com.jkojote.trex.user.domain.service.registration.EmailService
+import com.jkojote.trex.user.domain.service.registration.RegistrationService
+import com.jkojote.trex.user.domain.service.registration.VerificationTokenService
+import com.jkojote.trex.user.domain.service.registration.impl.RegistrationServiceImpl
+import com.jkojote.trex.user.domain.service.user.UserService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
