@@ -25,7 +25,7 @@ class ResourceApi(
     }
 
     val content = resourceService.getContent(resource.get())
-    if (content.isEmpty) {
+    if (content.isEmpty || !content.get().exists()) {
       return ResponseEntity(HttpStatus.NOT_FOUND)
     }
 

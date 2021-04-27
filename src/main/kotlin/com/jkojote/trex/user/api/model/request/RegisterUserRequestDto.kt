@@ -1,16 +1,16 @@
 package com.jkojote.trex.user.api.model.request
 
 import javax.validation.constraints.Email
-import javax.validation.constraints.Min
 import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.Size
 
 data class RegisterUserRequestDto(
 
-  @NotEmpty
-  @Email
+  @field:NotEmpty
+  @field:Email
   val email: String,
 
-  @NotEmpty
-  @Min(8)
+  @field:NotEmpty
+  @field:Size(min = 8)
   val password: String,
 )

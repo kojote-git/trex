@@ -6,11 +6,11 @@ import com.jkojote.trex.user.api.model.response.AuthenticationResultDto
 import com.jkojote.trex.user.api.model.response.RefreshResultDto
 import com.jkojote.trex.user.domain.service.authentication.AuthenticationFailedException
 import com.jkojote.trex.user.domain.service.authentication.AuthenticationService
+import com.jkojote.trex.user.domain.service.refresh.RefreshFailedException
 import com.jkojote.trex.util.mapTo
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import javax.security.auth.RefreshFailedException
 
 @RestController
 @RequestMapping(path = ["/api/user/authentication"], produces = ["application/json"])
