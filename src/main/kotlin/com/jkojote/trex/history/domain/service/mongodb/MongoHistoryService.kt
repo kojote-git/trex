@@ -65,7 +65,7 @@ class MongoHistoryService(private val mongoOperations: MongoOperations) : Histor
   override fun removeSavedPlace(history: History, placeId: PlaceId) : History {
     if (history.places.has { it.placeId == placeId }) {
       mongoOperations.updateFirst(
-        query(where(USER_ID).isEqualTo(history.userId)),
+        query(where(USER_ID).isEqualTo(history. userId)),
         pull(PLACES, mapOf("placeId" to placeId)),
         History::class.java
       )
